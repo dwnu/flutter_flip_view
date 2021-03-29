@@ -12,12 +12,12 @@ class FlipView extends StatefulWidget {
   final AxisDirection goFrontDirection;
 
   const FlipView({
-    Key key,
-    @required this.front,
-    @required this.back,
-    @required this.animationController,
-    AxisDirection goBackDirection,
-    AxisDirection goFrontDirection,
+    Key? key,
+    required this.front,
+    required this.back,
+    required this.animationController,
+    AxisDirection? goBackDirection,
+    AxisDirection? goFrontDirection,
   })  : this.goBackDirection = goBackDirection ?? AxisDirection.left,
         this.goFrontDirection = goFrontDirection ?? AxisDirection.left,
         super(key: key);
@@ -27,8 +27,8 @@ class FlipView extends StatefulWidget {
 }
 
 class FlipViewState extends State<FlipView> with SingleTickerProviderStateMixin {
-  Animation<double> _animation;
-  AnimationStatus _lastStatus;
+  late Animation<double> _animation;
+  AnimationStatus _lastStatus = AnimationStatus.dismissed;
 
   @override
   void initState() {
@@ -36,14 +36,19 @@ class FlipViewState extends State<FlipView> with SingleTickerProviderStateMixin 
     _animation = _calculateTweenSequence(widget.goBackDirection);
 
     widget.animationController.addStatusListener((AnimationStatus status) {
-      if (_lastStatus == status) return;
+      if (_lastStatus == status) {
+        return;
+      }
       _lastStatus = status;
 
-      if (!this.mounted) return;
+      if (this.mounted == false) {
+        return;
+      }
 
       if (status == AnimationStatus.completed || status == AnimationStatus.reverse) {
         _animation = _calculateTweenSequence(widget.goFrontDirection);
-      } else if (status == AnimationStatus.dismissed || status == AnimationStatus.forward) {
+      } else if (status == AnimationStatus.dismissed ||
+          status == AnimationStatus.forward) {
         _animation = _calculateTweenSequence(widget.goBackDirection);
       }
     });
@@ -71,7 +76,7 @@ class FlipViewState extends State<FlipView> with SingleTickerProviderStateMixin 
     final back = widget.back;
     return AnimatedBuilder(
       animation: _animation,
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         final direction = (_animation.status == AnimationStatus.forward ||
                 _animation.status == AnimationStatus.completed)
             ? widget.goBackDirection

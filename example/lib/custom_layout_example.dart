@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_view/flutter_flip_view.dart';
 
@@ -19,15 +21,17 @@ class _CustomLayoutExampleState extends State<CustomLayoutExample>
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
-    _curvedAnimation = CurvedAnimation(parent: _animationController, curve: Curves.easeInOut);
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    _curvedAnimation =
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut);
     _animationController.addStatusListener((AnimationStatus status) {
       if (!_focusNode.hasFocus && _animationController.isCompleted) {
         setState(() {
           FocusScope.of(context).requestFocus(_focusNode);
           print('complete  ${_focusNode.hasFocus}');
         });
-      }else if(_focusNode.hasFocus && !_animationController.isCompleted){
+      } else if (_focusNode.hasFocus && !_animationController.isCompleted) {
         _focusNode.unfocus();
       }
     });
@@ -95,7 +99,8 @@ class _CustomLayoutExampleState extends State<CustomLayoutExample>
                   text: TextSpan(children: [
                     TextSpan(text: 'Your verify code is: '),
                     TextSpan(
-                        text: 'EDIHK', style: TextStyle(fontSize: 15, color: Colors.teal.shade800)),
+                        text: 'EDIHK',
+                        style: TextStyle(fontSize: 15, color: Colors.teal.shade800)),
                   ], style: TextStyle(fontSize: 15, color: Colors.black87)),
                 ),
               ),

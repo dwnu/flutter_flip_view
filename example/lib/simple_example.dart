@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_view/flutter_flip_view.dart';
 
@@ -6,7 +8,8 @@ class SimpleExample extends StatefulWidget {
   _SimpleExampleState createState() => _SimpleExampleState();
 }
 
-class _SimpleExampleState extends State<SimpleExample> with SingleTickerProviderStateMixin {
+class _SimpleExampleState extends State<SimpleExample>
+    with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   Animation<double> _curvedAnimation;
 
@@ -14,8 +17,10 @@ class _SimpleExampleState extends State<SimpleExample> with SingleTickerProvider
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
-    _curvedAnimation = CurvedAnimation(parent: _animationController, curve: Curves.easeInOut);
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    _curvedAnimation =
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut);
   }
 
   @override
